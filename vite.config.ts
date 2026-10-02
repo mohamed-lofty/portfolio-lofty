@@ -13,4 +13,5 @@ export default defineConfig({
   preview: {
     port: 4173,
   },
+  base: process.env.VITE_BASE_PATH || '/portfolio-lofty',
 });
