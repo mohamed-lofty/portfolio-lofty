@@ -1,0 +1,205 @@
+.wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(36px, 5vw, 80px);
+  align-items: center;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.rule {
+  display: block;
+  width: 44px;
+  height: 2px;
+  margin-top: clamp(18px, 2.2vw, 26px);
+  background-color: var(--accent);
+  transform-origin: left center;
+}
+
+[data-reveal='in'] .rule {
+  animation: rule-draw 560ms var(--ease) both;
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.quote {
+  margin: 0;
+}
+
+.quote p {
+  max-width: 20ch;
+  margin-top: clamp(20px, 2.4vw, 28px);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: clamp(1.6rem, 1.15rem + 1.9vw, 2.5rem);
+  line-height: 1.24;
+  letter-spacing: var(--tracking-snug);
+}
+
+.return {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(24px, 3vw, 34px);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  color: var(--accent-ink);
+}
+
+.return::before {
+  content: '';
+  width: 42px;
+  height: 1px;
+  flex: none;
+  background-color: var(--accent);
+}
+
+/* ---------- diagram ---------- */
+
+.diagram {
+  width: min(100%, 380px);
+  height: auto;
+  justify-self: end;
+}
+
+[data-reveal='in'] .diagram {
+  animation: lofty-rise 700ms var(--ease) 120ms both;
+}
+
+.spine {
+  stroke: var(--line-strong);
+  stroke-width: 1.25;
+}
+
+.chevron {
+  stroke: var(--accent-ink);
+  stroke-width: 1.5;
+}
+
+.returnPath {
+  stroke: var(--accent-ink);
+  stroke-width: 1.25;
+  stroke-dasharray: 4 7;
+  animation: flow 2.6s linear infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
+
+.arrow {
+  stroke: var(--accent-ink);
+  stroke-width: 1.5;
+}
+
+.node {
+  fill: var(--bg);
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+/* each node acknowledges the signal as it passes */
+.ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.25;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ring-pulse 3.6s ease-out infinite;
+}
+
+@keyframes ring-pulse {
+  0% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  14%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+.num {
+  fill: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
+
+.labelText {
+  fill: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+/* ---------- travelling signal ---------- */
+
+.travelSpine {
+  fill: var(--accent);
+  offset-rotate: 0deg;
+  animation: travel-segment 6s linear infinite;
+}
+
+.travelReturn {
+  fill: var(--accent);
+  offset-rotate: 0deg;
+  animation: travel-segment 6s linear 3s infinite;
+}
+
+@keyframes travel-segment {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.9;
+  }
+  42% {
+    offset-distance: 100%;
+    opacity: 0.9;
+  }
+  48%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 860px) {
+  .wrap {
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 7vw, 52px);
+  }
+
+  .diagram {
+    justify-self: start;
+    width: min(100%, 340px);
+  }
+
+  .quote p {
+    max-width: 24ch;
+  }
+}

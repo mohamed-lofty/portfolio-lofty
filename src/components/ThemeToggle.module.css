@@ -1,0 +1,32 @@
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: var(--radius-pill);
+  color: var(--text-2);
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+.toggle:hover {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.icon {
+  animation: icon-in 260ms var(--ease);
+}
+
+@keyframes icon-in {
+  from {
+    opacity: 0;
+    transform: rotate(-40deg) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

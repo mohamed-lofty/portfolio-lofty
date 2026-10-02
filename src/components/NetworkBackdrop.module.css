@@ -1,0 +1,59 @@
+.network {
+  position: absolute;
+  top: clamp(24px, 6vw, 72px);
+  right: calc(var(--gutter) * -0.4);
+  width: min(44vw, 480px);
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+  /* strength is a filter, not the opacity property, so the entrance fade
+     (which animates opacity 0 → 1) never overrides it */
+  filter: opacity(var(--network-opacity, 0.55));
+  animation: lofty-rise 700ms var(--ease) 180ms both;
+}
+
+.loop {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 4 7;
+}
+
+.node {
+  fill: var(--bg);
+  stroke: var(--line-strong);
+  stroke-width: 1.25;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-breathe 5.5s ease-in-out infinite;
+}
+
+@keyframes node-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.label {
+  fill: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  opacity: 0.75;
+}
+
+.traveler {
+  fill: var(--accent);
+  offset-path: path('M60 80 L320 50 L420 240 L200 320 L40 260 Z');
+  offset-rotate: 0deg;
+  animation: travel 16s linear infinite;
+}
+
+@keyframes travel {
+  to {
+    offset-distance: 100%;
+  }
+}

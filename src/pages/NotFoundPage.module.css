@@ -1,0 +1,46 @@
+.page {
+  padding-block: clamp(72px, 12vw, 160px);
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.title {
+  margin-top: clamp(20px, 3vw, 28px);
+  max-width: 18ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: var(--text-4xl);
+  line-height: 1.08;
+  letter-spacing: var(--tracking-tight);
+}
+
+.text {
+  margin-top: 18px;
+  max-width: 48ch;
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.page :global(.btn) {
+  margin-top: clamp(28px, 3.5vw, 40px);
+}

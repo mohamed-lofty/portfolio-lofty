@@ -1,0 +1,520 @@
+.console {
+  margin-top: clamp(28px, 3.5vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  background-color: var(--surface);
+  overflow: hidden;
+}
+
+/* ---------- chrome ---------- */
+
+.head,
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 12px clamp(14px, 2vw, 20px);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.head {
+  border-bottom: 1px solid var(--line);
+}
+
+.foot {
+  border-top: 1px solid var(--line);
+  color: var(--text-3);
+}
+
+.headState {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  animation: lofty-pulse 2.8s ease-in-out infinite;
+}
+
+.footReturn {
+  color: var(--accent-ink);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+}
+
+/* ---------- map ---------- */
+
+.mapWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(18px, 2.4vw, 32px);
+  border-right: 1px solid var(--line);
+  min-width: 0;
+}
+
+.map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 620 / 340;
+}
+
+/* subtle blueprint grid */
+.map::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.crop {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+}
+
+.cropTop {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+
+.cropBottom {
+  right: -1px;
+  bottom: -1px;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+/* ---------- signal path ---------- */
+
+.track {
+  position: absolute;
+  background-color: var(--line);
+}
+
+.signal {
+  position: absolute;
+  background-color: var(--accent);
+  transition: transform 520ms var(--ease);
+}
+
+.signal:not(.vertical) {
+  transform: scaleX(0);
+}
+
+.signal.vertical {
+  transform: scaleY(0);
+}
+
+.signal.lit:not(.vertical) {
+  transform: scaleX(1);
+}
+
+.signal.lit.vertical {
+  transform: scaleY(1);
+}
+
+/* the signal acknowledges the node it arrives at */
+.signal.vertical::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--accent);
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease) 320ms;
+}
+
+.signal.vertical.lit::after {
+  opacity: 1;
+}
+
+/* LEARN → UNDERSTAND — the return path is always alive */
+.return {
+  position: absolute;
+  width: 1px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--accent-ink) 0 5px,
+    transparent 5px 12px
+  );
+  animation: return-flow 1.6s linear infinite;
+}
+
+@keyframes return-flow {
+  to {
+    background-position: 0 12px;
+  }
+}
+
+.returnArrow {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 6px solid var(--accent-ink);
+  transform: translateX(-50%);
+}
+
+/* ---------- nodes ---------- */
+
+.mapNodes {
+  position: absolute;
+  inset: 0;
+}
+
+.node {
+  position: absolute;
+}
+
+.nodeBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 0 4px;
+  transform: translate(-50%, -16px);
+}
+
+.nodeLabelAbove .nodeBtn {
+  transform: translate(-50%, calc(-100% + 16px));
+}
+
+.dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background-color: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.nodeLabel {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  color: var(--text-2);
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+
+.nodeBtn:hover .dot {
+  border-color: var(--accent-ink);
+}
+
+.nodeBtn:hover .nodeLabel {
+  color: var(--text);
+}
+
+.nodeBtnActive .dot {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.nodeBtnActive .nodeLabel {
+  color: var(--text);
+}
+
+/* system assembly: nodes arrive in order */
+[data-reveal='in'] .node {
+  animation: lofty-rise 560ms var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 140ms);
+}
+
+/* ---------- rail (small screens) ---------- */
+
+.rail {
+  display: none;
+}
+
+.railItem {
+  position: relative;
+}
+
+.nodeBtnRail {
+  flex-direction: row;
+  gap: 14px;
+  width: 100%;
+  min-height: 52px;
+  padding: 6px 8px;
+  transform: none;
+  border-radius: var(--radius-xs);
+  transition: background-color var(--dur) var(--ease);
+}
+
+.nodeBtnRail:hover {
+  background-color: var(--surface-hover);
+}
+
+.railReturn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 46px;
+  padding: 6px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.1em;
+  color: var(--accent-ink);
+}
+
+.railReturnMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  flex: none;
+  font-size: 13px;
+}
+
+/* ---------- detail panel ---------- */
+
+.panel {
+  min-width: 0;
+  padding: clamp(20px, 2.6vw, 34px);
+}
+
+.panelInner {
+  animation: lofty-rise 420ms var(--ease) both;
+}
+
+.panelMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.panelStage {
+  color: var(--accent-ink);
+}
+
+.panelTag {
+  margin-left: auto;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  color: var(--text-2);
+}
+
+.panelTitle {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+}
+
+.panelStatement {
+  margin-top: 12px;
+  max-width: 36ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: var(--text-lg);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+}
+
+.panelLabel {
+  margin-top: clamp(20px, 2.4vw, 28px);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+}
+
+.questions {
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.question {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+
+.qIndex {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.qText {
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.output {
+  margin-top: clamp(18px, 2.2vw, 24px);
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-inset);
+}
+
+.outputLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+}
+
+.outputValue {
+  margin-top: 7px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+.lens {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-xs);
+}
+
+.lensLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  color: var(--accent-ink);
+}
+
+.lensItem {
+  position: relative;
+  margin-top: 9px;
+  padding-left: 15px;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.lensItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.66em;
+  width: 7px;
+  height: 1px;
+  background-color: var(--accent-ink);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 980px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+
+  .mapWrap {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .map {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 760px) {
+  .map {
+    display: none;
+  }
+
+  .mapWrap {
+    display: block;
+    padding: clamp(14px, 4vw, 22px) clamp(8px, 3vw, 16px);
+  }
+
+  .rail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rail::before {
+    content: '';
+    position: absolute;
+    left: 23.5px;
+    top: 26px;
+    bottom: 26px;
+    width: 1px;
+    background-color: var(--line);
+  }
+
+  .railItem {
+    position: relative;
+  }
+
+  .nodeBtnRail {
+    position: relative;
+  }
+
+  .panelTag {
+    margin-left: 0;
+  }
+}

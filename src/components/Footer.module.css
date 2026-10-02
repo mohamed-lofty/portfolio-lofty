@@ -1,0 +1,60 @@
+.footer {
+  border-top: 1px solid var(--line);
+  padding-block: var(--space-5);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.brandName {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.descriptor {
+  color: var(--text-3);
+}
+
+.statementGroup {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  text-align: right;
+}
+
+.supporting {
+  color: var(--text-3);
+}
+
+.copyright {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+@media (max-width: 620px) {
+  .statementGroup {
+    justify-items: start;
+    text-align: left;
+  }
+}

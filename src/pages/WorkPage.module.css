@@ -1,0 +1,11 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.stack > article + article {
+  border-top: 1px solid var(--line);
+}

@@ -1,0 +1,326 @@
+/* ============================================================
+   THINKING — editorial hero, build logic flow, lens, notes
+   ============================================================ */
+
+/* ---------- editorial hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.quote {
+  margin: 0;
+  max-width: 100%;
+}
+
+.quoteRule {
+  display: block;
+  width: 44px;
+  height: 2px;
+  margin-bottom: clamp(20px, 2.5vw, 28px);
+  background-color: var(--accent);
+  transform-origin: left center;
+}
+
+/* the rule draws itself as the quote arrives */
+[data-reveal='in'] .quoteRule {
+  animation: rule-draw 560ms var(--ease) both;
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* the quote assembles word by word — editorial, not typewriter */
+.word {
+  display: inline-block;
+}
+
+[data-reveal='in'] .word {
+  animation: word-in 580ms var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 42ms);
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.3em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.quote p {
+  max-width: 30ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
+  line-height: 1.22;
+  letter-spacing: var(--tracking-snug);
+}
+
+/* ---------- system spec ---------- */
+
+.spec {
+  border-top: 1px solid var(--line);
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.specKey {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+}
+
+.specValue {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+/* ---------- system flow ---------- */
+
+.flowWrap {
+  margin-bottom: clamp(4px, 1vw, 10px);
+}
+
+.flowLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+}
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px 6px;
+  margin-top: 14px;
+}
+
+.flowItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.flowBtn {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background-color: var(--surface);
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+
+.flowBtn:hover {
+  border-color: var(--line-strong);
+  background-color: var(--surface-hover);
+}
+
+.flowNum {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  transition: color var(--dur) var(--ease);
+}
+
+.flowName {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.flowBtnActive,
+.flowBtnActive:hover {
+  border-color: var(--accent-ink);
+  background-color: color-mix(in srgb, var(--accent) 16%, var(--surface));
+}
+
+.flowBtnActive .flowNum {
+  color: var(--accent-ink);
+}
+
+.flowArrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.flowLoop {
+  font-size: 14px;
+  color: var(--accent-ink);
+}
+
+/* ---------- long-term lens ---------- */
+
+.lens {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(28px, 4vw, 56px);
+  padding: clamp(24px, 3vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-inset);
+}
+
+.lensText {
+  max-width: 46ch;
+  font-size: var(--text-md);
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+.lensText + .lensText {
+  margin-top: var(--space-4);
+}
+
+.lensLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: var(--space-5);
+  padding-bottom: 3px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition: color var(--dur) var(--ease);
+}
+
+.lensLink:hover {
+  color: var(--accent-ink);
+}
+
+.lensStage {
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--line);
+}
+
+.lensStage:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.lensStageHead {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+
+.lensStageNum {
+  color: var(--accent-ink);
+}
+
+.lensQuestion {
+  position: relative;
+  margin-top: 10px;
+  padding-left: 16px;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.lensQuestion::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 7px;
+  height: 1px;
+  background-color: var(--accent-ink);
+}
+
+.lensQuestion + .lensQuestion {
+  margin-top: 7px;
+}
+
+/* ---------- deeper explorations ---------- */
+
+.block + .block {
+  margin-top: clamp(44px, 6vw, 72px);
+}
+
+.blockLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+  margin-bottom: var(--space-4);
+}
+
+.topics {
+  border-top: 1px solid var(--line);
+}
+
+.articleList {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 6vw, 44px);
+  }
+
+  .quote p {
+    max-width: 26ch;
+  }
+
+  .lens {
+    grid-template-columns: 1fr;
+    gap: clamp(26px, 5vw, 36px);
+  }
+}
+
+@media (max-width: 480px) {
+  .specRow {
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .flowBtn {
+    padding: 9px 10px;
+  }
+}

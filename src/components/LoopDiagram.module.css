@@ -1,0 +1,109 @@
+.diagram {
+  width: min(100%, 480px);
+  height: auto;
+}
+
+.line {
+  stroke: var(--line-strong);
+  stroke-width: 1.25;
+}
+
+.arrow {
+  stroke: var(--accent-ink);
+  stroke-width: 1.5;
+}
+
+.arc {
+  stroke: var(--line-strong);
+  stroke-width: 1.25;
+  stroke-dasharray: 4 7;
+  animation: flow 2.6s linear infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
+
+.node {
+  fill: var(--bg);
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+.nodeAccent {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+/* ---------- closing signal ---------- */
+
+.travelLine {
+  fill: var(--accent);
+  offset-path: path('M66 56h320');
+  animation: travel-segment 6s linear infinite;
+}
+
+.travelArc {
+  fill: var(--accent);
+  offset-path: path('M392 78c0 52-58 64-172 64S48 130 48 86');
+  animation: travel-segment 6s linear 2.4s infinite;
+}
+
+@keyframes travel-segment {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.9;
+  }
+  40% {
+    offset-distance: 100%;
+    opacity: 0.9;
+  }
+  44%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* each node acknowledges the signal as it passes */
+.ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.25;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ring-pulse 6s ease-out infinite;
+}
+
+@keyframes ring-pulse {
+  0% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  12%,
+  100% {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+.label {
+  fill: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.sub {
+  fill: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
